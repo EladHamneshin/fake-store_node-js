@@ -47,3 +47,21 @@ export function updateUser(req, res) {
     }
 
 }
+
+
+export function adminAcsessMiddleware(req, res, next){
+    try {
+        if(!usersBL.isUserIdAdmin(+req.query.id))
+            res.status(401).send("You are not allowed to do this action");
+    } catch (error) {
+        res.send(error.message);
+    }
+    next();
+}
+
+const creatorAcsess = (req, res, next) => {
+    const id = req.query.id;
+    if(!user.isCreator)
+        res.status(401).send("You are not allowed to do this action");
+    next();
+}

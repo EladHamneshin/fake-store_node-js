@@ -36,3 +36,7 @@ export async function updateUser(id ,user) {
     user.password = await bcrypt.hash(user.password, 10);
     usersDL.updateUser(id, user);
 }
+
+export function isUserIdAdmin(id) {
+    return usersDL.isUserIdAdmin(id);
+}

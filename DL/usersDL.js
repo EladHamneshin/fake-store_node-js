@@ -29,19 +29,6 @@ export function addUser(user) {
     updateDb().catch(err => console.log(err));
 }
 
-export function addUsers(newUsers) {
-    for(const user of newUsers){
-        if(utils.isIdExist(users ,user.id))
-            throw new Error(`User with id: "${user.id}" already exist`);
-        
-        if(isEmailExist(user.email))
-            throw new Error(`User with email: "${user.email}" already exist`);
-
-        users.push(utils.deepCopy(user));
-    }
-    updateDb().catch(err => console.log(err));
-}
-
 export function updateUser(userId, user) {
     if(isEmailExist(user.email))
         throw new Error(`User with email: "${user.email}" already exist`);
@@ -55,6 +42,12 @@ export function deleteUser(userId) {
     users.splice(index, 1);
     updateDb().catch(err => console.log(err));
 }
+
+export function isUserIdAdmin(userId) {
+    const index = utils.getObjIndexById(users ,userId);
+    return users[index].isAdmin;
+}
+
 
 function isEmailExist(email) {
     return users.some(u => u.email === email);
