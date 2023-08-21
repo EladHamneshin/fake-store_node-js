@@ -9,6 +9,6 @@ export function getObjIndexById(arr ,id) {
     return index;
 }
 
-export function isIdExist(id) {
-    return products.some(o => o.id === id);
+export function isIdExist(arr, id) {
+    return arr.some(o => o.id === id);
 }

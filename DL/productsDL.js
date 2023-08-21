@@ -1,11 +1,12 @@
 import jsonFile from 'jsonfile';
+import * as utils from './DLUtils.js';
 
 const products = []
 
 // ----------------------------------------- CRUD -----------------------------------------------------
 
 export function getProducts() {
-    return deepCopy(products);
+    return utils.deepCopy(products);
 }
 
 export function getProductById(id) {
@@ -13,48 +14,48 @@ export function getProductById(id) {
     if (!product) 
         throw new Error(`Product with id: "${id}" not found`);
     
-    return deepCopy(product);
+    return utils.deepCopy(product);
 }
 
 export function addProduct(product) {
-    if(isPidExist(product.id))
+    if(utils.isIdExist(products ,product.id))
         throw new Error(`Product with id: "${product.id}" already exist`);
 
-    products.push(deepCopy(product));
-    return updateDb().catch(err => console.log(err));
+    products.push(utils.deepCopy(product));
+    updateDb().catch(err => console.log(err));
 }
 
-export function addProducts(newProducts) {
+export async function addProducts(newProducts) {
     for(const product of newProducts){
-        if(isPidExist(product.id))
+        if(utils.isIdExist(products ,product.id))
             throw new Error(`Product with id: "${product.id}" already exist`);
-        products.push(deepCopy(product));
+        products.push(utils.deepCopy(product));
     }
     return updateDb().catch(err => console.log(err));
 }
 
 export function updateProduct(productId, product) {
-    const index = getProductIndexById(productId);
-    products[index] = deepCopy(product);
-    return updateDb().catch(err => console.log(err));
+    const index = utils.getObjIndexById(products ,productId);
+    products[index] = {...product};
+    updateDb().catch(err => console.log(err));
 }
 
 export function deleteProduct(productId) {
-    const index = getProductIndexById(productId) 
+    const index = utils.getObjIndexById(products ,productId);
     products.splice(index, 1);
-    return updateDb().catch(err => console.log(err));
+    updateDb().catch(err => console.log(err));
 }
 
 export function increseProductQuantity(productId) {
-    const index = getProductIndexById(productId);
+    const index = utils.getObjIndexById(products ,productId);
     products[index].quantity++;
-    return updateDb().catch(err => console.log(err));
+    updateDb().catch(err => console.log(err));
 }
 
 export function decreseProductQuantity(productId) {
-    const index = getProductIndexById(productId);
+    const index = utils.getObjIndexById(products ,productId);
     products[index].quantity--;
-    return updateDb().catch(err => console.log(err));
+    updateDb().catch(err => console.log(err));
 }
 
 
@@ -73,21 +74,4 @@ export function retriveDb() {
 
 export function updateDb() {
     return jsonFile.writeFile("data/products.json", { products });
-}
-
-
-// ----------------------------------------- utiles -----------------------------------------------------
-function deepCopy(obj) {
-    return JSON.parse(JSON.stringify(obj));
-}
-
-function getProductIndexById(productId) {
-    const index = products.findIndex(p => p.id === productId);
-    if (index === -1)
-        throw new Error(`Product with id: "${productId}" not found`);
-    return index;
-}
-
-function isPidExist(pid) {
-    return products.some(p => p.id === pid);
 }
