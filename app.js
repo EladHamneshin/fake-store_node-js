@@ -5,11 +5,13 @@ import * as usersDL from "./DL/usersDL.js";
 import {userRouter} from "./routes/usersRouter.js";
 import {productsRouter} from "./routes/productsRouter.js";
 import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
 const port = 3000;
 
 function initServer(app, port) {
+    app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
     app.use(morgan('dev'))
