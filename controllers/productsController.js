@@ -1,7 +1,4 @@
-import exp from 'constants';
 import * as productsBL from '../BL/productsBL.js';
-import { log } from 'console';
-
 
 export function getProducts(req, res) {
     res.send(productsBL.getProducts());

@@ -10,7 +10,7 @@ import cors from "cors";
 const app = express();
 const port = 3000;
 
-function initServer(app, port) {
+// function initServer(app, port) {
     app.use(cors());
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
@@ -32,6 +32,6 @@ function initServer(app, port) {
         usersDL.retriveDb().then(() => console.log("Users DB is ready"));
     });
 
-}
+// }
 
-initServer(app, port);
+// initServer(app, port);
