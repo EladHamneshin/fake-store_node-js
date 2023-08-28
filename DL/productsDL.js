@@ -22,7 +22,7 @@ export function addProduct(product) {
         throw new Error(`Product with id: "${product.id}" already exist`);
 
     products.push(utils.deepCopy(product));
-    updateDb().catch(err => console.log(err));
+    updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 export async function addProducts(newProducts) {
@@ -31,31 +31,31 @@ export async function addProducts(newProducts) {
             throw new Error(`Product with id: "${product.id}" already exist`);
         products.push(utils.deepCopy(product));
     }
-    return updateDb().catch(err => console.log(err));
+    return updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 export function updateProduct(productId, product) {
     const index = utils.getObjIndexById(products ,productId);
     products[index] = {...product};
-    updateDb().catch(err => console.log(err));
+    updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 export function deleteProduct(productId) {
     const index = utils.getObjIndexById(products ,productId);
-    products.splice(index, 1);
-    updateDb().catch(err => console.log(err));
+    products.splice(index, 1); 
+    updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 export function increseProductQuantity(productId) {
     const index = utils.getObjIndexById(products ,productId);
     products[index].quantity++;
-    updateDb().catch(err => console.log(err));
+    updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 export function decreseProductQuantity(productId) {
     const index = utils.getObjIndexById(products ,productId);
     products[index].quantity--;
-    updateDb().catch(err => console.log(err));
+    updateDb().then(()=>console.log("db updated successfully")).catch(err => console.log(err));
 }
 
 
@@ -72,6 +72,6 @@ export function retriveDb() {
     })
 }
 
-export function updateDb() {
+export function updateDb(){
     return jsonFile.writeFile("data/products.json", { products });
 }

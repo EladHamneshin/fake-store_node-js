@@ -1,5 +1,6 @@
 import exp from 'constants';
 import * as productsBL from '../BL/productsBL.js';
+import { log } from 'console';
 
 
 export function getProducts(req, res) {
@@ -27,7 +28,7 @@ export function addProduct(req, res) {
 
 export function updateProduct(req, res) {
     try{
-        const id = req.params.id;
+        const id = +req.params.id;
         const product = req.body;
         productsBL.updateProduct(id ,product);
         res.send(productsBL.getProducts());
@@ -38,7 +39,7 @@ export function updateProduct(req, res) {
 
 export function deleteProduct(req, res) {
     try{
-        const id = req.params.id;
+        const id = +req.params.id;
         productsBL.deleteProduct(id);
         res.send(productsBL.getProducts());
     } catch(err) {

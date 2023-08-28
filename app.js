@@ -19,7 +19,6 @@ function initServer(app, port) {
     app.use("/users", userRouter);
 
     app.listen(port, () => {
-
         axios.get("https://fakestoreapi.com/products")
         .then((res) => {
             const products = res.data;
