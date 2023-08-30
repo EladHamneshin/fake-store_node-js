@@ -28,5 +28,3 @@ export function increseProductQuantity(productId) {
 export function decreseProductQuantity(productId) {
     productsDL.decreseProductQuantity(productId);
 }
-
-

@@ -65,7 +65,7 @@ export function retriveDb() {
         jsonFile.readFile("data/products.json", (err, obj) => {
             if (err) reject(err);
             else {
-                data = obj.users;
+                products = obj.users;
                 resolve();
             }
         });

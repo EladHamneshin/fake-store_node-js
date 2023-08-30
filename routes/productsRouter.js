@@ -16,4 +16,3 @@ productsRouter.delete('/:id', prouctsController.deleteProduct);
 productsRouter.patch('/increase/:id', prouctsController.increseProductQuantity);
 
 productsRouter.patch('/decrease/:id', prouctsController.decreseProductQuantity);
-
